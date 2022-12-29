@@ -30,7 +30,7 @@
 
 ## 🍋 PR Rule
 
-- **julia-ing:master ← 본인깃헙id:master** 로 PR 
+- **julia-ing:main ← 본인깃헙id:main** 로 PR 
 - PR 메시지
     - [이름] week1 `[최예원] week5`
 
