@@ -11,3 +11,4 @@ class Solution:
                 idx2+=1
 
         return [idx1, idx2]
+        # 다른 분들 코드보고 깨달았는데 이중 for문의 동작 방식을 굳이 번거롭게 작성해놨네요...
