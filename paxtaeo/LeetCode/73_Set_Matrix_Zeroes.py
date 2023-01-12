@@ -8,12 +8,12 @@ class Solution:
 
         m, n = len(matrix), len(matrix[0])
 
-        zero_r, zero_c = [], []
+        zero_r, zero_c = set(), set()
         for r in range(m):
             for c in range(n):
                 if matrix[r][c] == 0:
-                    zero_r.append(r)
-                    zero_c.append(c)
+                    zero_r.add(r)
+                    zero_c.add(c)
         
         for r in range(m):
             for c in range(n):
