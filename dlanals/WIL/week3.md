@@ -48,8 +48,19 @@
 
 ## Solution
 ### divide and conquer solution
+O(nlogk)
+- n : number of elements of merged linked list
+- k : number of linked lists
+
 ```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
 class Solution(object):
+    # 분할
     def mergeKLists(self, lists):
         if not lists:
             return None
@@ -57,11 +68,13 @@ class Solution(object):
             return lists[0]
         mid = len(lists) // 2
         l, r = self.mergeKLists(lists[:mid]), self.mergeKLists(lists[mid:])
+        # l, r : 각각 왼쪽 반, 오른쪽 반 리스트들 merge한 연결리스트의 노드
         return self.merge(l, r)
     
     def merge(self, l, r):
         dummy = p = ListNode()
-        while l and r:
+        # 새로운 연결리스트를 위한 리스트 노드 생성
+        while l and r: # l, r 전부 순회할때까지 l, r 값 비교
             if l.val < r.val:
                 p.next = l
                 l = l.next
@@ -80,4 +93,47 @@ class Solution(object):
             return l
         r.next = self.merge(l, r.next)
         return r
+```
+
+의문점
+- merge1는 언제 사용되는걸까
+- dummy와 p를 분리해놓은 이유?
+
+
+### Heap
+
+- 각 연결리스트의 첫번째 노드를 take 한 뒤 힙에 추가 (add(node.val, i), 이 때 i는 i번째 리스트)
+- dummy node head 생성
+- 힙으로부터 첫번째 노드 pop한 뒤 dummy list에서의 next node로 만들기
+- i번째 연결리스트의 첫번째 노드 힙에 추가 (해당 리스트의 노드를 힙으로부터 제거했으므로)
+- 힙이 empty할 때까지 반복
+
+```python
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+
+class Solution(object):
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        # head, curr 
+        head = ListNode(None)
+        curr = head
+        h = []
+        for i in range(len(lists)):
+            if lists[i]:
+                heapq.heappush(h, (lists[i].val, i))
+                lists[i] = lists[i].next
+        
+        while h:
+            val, i = heapq.heappop(h)
+            curr.next = ListNode(val)
+            curr = curr.next
+            if lists[i]:
+                heapq.heappush(h, (lists[i].val, i))
+                lists[i] = lists[i].next
+        
+        return head.next
+
 ```
