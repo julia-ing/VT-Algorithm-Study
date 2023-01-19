@@ -6,8 +6,8 @@
 #         self.right = right
 class Solution:
     def invertTree(self, root: Optional[TreeNode]) -> Optional[TreeNode]:
-        invertedTree = self.recursionInvert(root)
-        return invertedTree
+        self.recursionInvert(root)
+        return root
 
     def recursionInvert(self, node:Optional[TreeNode]) -> None:
         if node!=None:
