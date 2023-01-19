@@ -127,13 +127,15 @@ class Solution(object):
         # 연결리스트 순회
         for i in range(len(lists)):
             if lists[i]:
-            # 
+            # i번째 연결리스트의 현재 노드와 연결리스트 인덱스를 힙에 push
+            # 이 때 heappush(heap, item)
                 heapq.heappush(h, (lists[i].val, i))
                 lists[i] = lists[i].next
         
+        # 힙 순회
         while h:
-            val, i = heapq.heappop(h)
-            curr.next = ListNode(val)
+            val, i = heapq.heappop(h)   # 힙으로부터 pop한 것 (최솟값)
+            curr.next = ListNode(val)   # curr 
             curr = curr.next
             if lists[i]:
                 heapq.heappush(h, (lists[i].val, i))
