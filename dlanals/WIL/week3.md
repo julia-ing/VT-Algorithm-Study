@@ -117,12 +117,17 @@ class Solution(object):
 
 class Solution(object):
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        # head, curr 
+        # head, curr 노드 생성
         head = ListNode(None)
         curr = head
+        
+        # 힙 생성
         h = []
+        
+        # 연결리스트 순회
         for i in range(len(lists)):
             if lists[i]:
+            # 
                 heapq.heappush(h, (lists[i].val, i))
                 lists[i] = lists[i].next
         
