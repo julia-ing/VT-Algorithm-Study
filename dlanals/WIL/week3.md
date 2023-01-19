@@ -103,7 +103,7 @@ class Solution(object):
 ### Heap
 
 - 각 연결리스트의 첫번째 노드를 take 한 뒤 힙에 추가 (add(node.val, i), 이 때 i는 i번째 리스트)
-- dummy node head 생성
+- dummy node (head) 생성
 - 힙으로부터 첫번째 노드 pop한 뒤 dummy list에서의 next node로 만들기
 - i번째 연결리스트의 첫번째 노드 힙에 추가 (해당 리스트의 노드를 힙으로부터 제거했으므로)
 - 힙이 empty할 때까지 반복
@@ -135,12 +135,44 @@ class Solution(object):
         # 힙 순회
         while h:
             val, i = heapq.heappop(h)   # 힙으로부터 pop한 것 (최솟값)
-            curr.next = ListNode(val)   # curr 
+            curr.next = ListNode(val)   # curr 노드 이동
             curr = curr.next
             if lists[i]:
-                heapq.heappush(h, (lists[i].val, i))
-                lists[i] = lists[i].next
+                heapq.heappush(h, (lists[i].val, i)) # 힙에 i번째 리스트에서의 노드, 리스트 인덱스 삽입
+                lists[i] = lists[i].next # list 이동
         
         return head.next
 
 ```
+
+# 226. Invert Binary Tree
+- easy
+- 오랜만의 easy 문제..! 과연 나에게도 easy할까!
+
+## 의식의 흐름
+- binary tree invert 문제
+- 노드 순회하며 left, right 바꾸기?
+- 하지만 코드가 너무 지저분해져서 솔루션 참고
+
+## Solution
+```python
+# Definition for a binary tree node.
+# class TreeNode:
+#     def __init__(self, val=0, left=None, right=None):
+#         self.val = val
+#         self.left = left
+#         self.right = right
+
+class Solution:
+    def invertTree(self, root):
+        if root:
+            # 재귀 구조
+            root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+            return root  
+ ```
+
+
+느낀점
+- 연결리스트, 힙, 트리 개념을 다시 공부하고 스스로 구현할 수 있도록 많이 연습해야겠다.
+- 알고리즘 공부가 너무 오랜만이라 다시 감을 잡는 데 시간이 오래 걸리는 듯하다. 여전히 어렵다.
+- 부족한 만큼 지금보다 시간을 더 투자해서 정리, 복습해야겠다.
