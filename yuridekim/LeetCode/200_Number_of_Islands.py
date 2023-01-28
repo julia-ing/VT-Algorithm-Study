@@ -17,15 +17,3 @@ class Solution(object):
                     self.dfs(grid, i, j)
                     island_count += 1
         return island_count
-
-
-
-
-solution=Solution()
-grid = [
-  ["1","1","0","0","0"],
-  ["1","1","0","0","0"],
-  ["0","0","1","0","0"],
-  ["0","0","0","1","1"]
-]
-print(solution.numIslands(grid))
