@@ -6,7 +6,7 @@
 
 ### 200. Number of Islands
 #### 문제풀이
-보자마자 처음에는 string을 reverse해서 dp로 풀어줘야하나라는 생각을 했지만 현재까지 가지고 있는 string이랑만 비교해주면 될 것 같아서 단순 string에서 window를 slide해주면서 풀어나가야겠다고 생각을 했다!
+처음 로직은 island라면 어쨌든 동서남북 사방이 한번은 water일테니 4 방향을 한번이라도 접하게 되면 이를 true로 설정해주고 4개가 모두 true가 되면 island의 개수를 하나씩 늘려나가는 방법을 생각해봤다.
 
 - First try
 ```
@@ -44,53 +44,37 @@ class Solution(object):
                         island_direction.append([False, False, False, False])
         return cur_island
 ```
-일단 string을 한자리씩 올라가면서 새로 들어오는 char를 넣어준다. 이때 고려해주는 점은 이미 갖고 있는 string에서 이미 들고 있는 char가 새로 들어오면 그 char가 들어오기 전까지의 원래 string의 길이를 비교해주고서 중복 char의 두번째 char개 시작하는 곳부터 string을 들고 있어준다.
-예를 들어 wkpkefdtk 같은 경우 처음에는 wkp를 갖고 있다가 wkpk가 되는 순간 앞에 wk를 버리고 pk로 string을 교체해주고서 거기서부터 다시 string을 탐색해나간다!
-
-- 생각해주지 못한 예외 처리들
-> "au": 지금 코드 상으로 겹치는 char가 없으면 length를 측정해서 max로 교체해주는 시점이 없어서 추가해줬다.
-
-> " ": length가 1인 경우도 따로 처리해줘야한다
-
-> "cdd": 마찬가지로 cd에서 코드 때문에 d로 string을 교체해주기 전에 max length를 체크해주는 시점이 없어서 다음과 같이 매 iteration마다 그냥 max length를 체크해줬는데 이게 시간에 영향을 줬을 수도 있을 것 같다.
+여기서 2/3 정도의 케이스가 통과했지만 [[1,1,1],[1,0,1],[1,1,1]]에서 패스를 못했다. [1][1]의 0을 만나기 전에 한번씩 사면 모두 물을 만나게 되지만 실제로 모두 이어져있기 때문에 2개가 아닌 1개의 island로 생각해줘야한다.
 
 
 #### 💡 What I learned!
-runtime: beats 87.87%
-memory: beats 52.37%
-처음에 문제를 보고 겁먹었지만 생각보다 쉬운 문제였지만 예외 처리를 많이 놓친 것 같다. 문제 조건을 꼼꼼히 읽어보자!
-라이브 코테에서 이렇게 막무가내로 예외 상황을 생각 안 해주고 내버리면 혼날 것 같다!
-
 ```
-if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) or grid[i][j]=='0' or grid[i][j]=='#' :
+class Solution(object):
+    def dfs(self, grid, i, j):
+        if i<0 or j<0 or i>=len(grid) or j>=len(grid[0]) or grid[i][j]=='0' or grid[i][j]=='#' :
+            return
+        grid[i][j] = '#'
+        self.dfs(grid, i-1, j)
+        self.dfs(grid, i, j-1)
+        self.dfs(grid, i+1, j)
+        self.dfs(grid, i, j+1)
+
+    def numIslands(self, grid):
+        m=len(grid); n=len(grid[0])
+        island_count=0
+        for i in range(m):
+            for j in range(n):
+                if grid[i][j] == '1':
+                    self.dfs(grid, i, j)
+                    island_count += 1
+        return island_count
 ```
-
-```
-class Solution:
-    def lengthOfLongestSubstring(self, s: str) -> int:
-        # Base Case
-        if len(s) == 1: return 1
-
-
-        count, s_result = 0, ''
-
-        for i in s:
-            if i not in s_result:
-                s_result += i
-            else:
-                s_result = s_result[s_result.index(i)+1:] + i
-
-            if len(s_result) > count:
-                count = len(s_result)
-        
-        return count
-```
-예시 코드랑 비교해보니 로직은 거의 비슷한 것 같은데 중복이 없을 경우에만 char를 더해준다는 점에서 차이를 가졌다. 나는 일단 더해주고 string에서 더해주기 전까지의 string이랑만 비교해줬는데 생각해보니 조금 비효율적이었던 것 같다!
+그래서 dfs를 이용해서 1을 만나면 사면을 탐색해주고 이를 visited로 표시해주기 위해 #으로 대체를 해준다. 그리고 탐색을 모두 완료하고 adjacent node에 더 이상 1이 없다면 island 개수를 늘려주는 방식으로 구현을 해줬다.
 
 -------------------------------------------------------------------
 ### 124. Binary Tree Maximum Path Sum
 #### 문제풀이
-처음에 감이 안 와서 topic이 dp인 것을 확인하고 어떤 걸 dp로 놓아야하나 고민하면서 첫 코드를 짰다.
+dp와 tree 문제가 혼용돼서 어려웠다.
 ```
 class Solution(object):
     def dfs(self, node, dp):
@@ -121,48 +105,30 @@ class Solution(object):
         self.dfs(root, dp)
         return max(dp)
 ```
-첫 코드에서 바보같이 첫 occurence만 찾아서 대체해줘야했는데 replace 마지막에 1을 빼주는 걸 까먹어서 다시 넣어줬다. 답은 맞게 나왔는데 시간 복잡도가 beats 5.10%, memory가 beats 8.12%로 심각하게 나와서 어떻게 개선을 해줘야하나 고민해봤다.
-
-그래서 list에 중복 string을 넣어주는 if 문을 빼면 매 case마다 if문을 측정하는 시간이 줄어들까?했지만 "aaaaaaaaaaaaaaaaaaaaaaaaaaaa"에서 메모리 부족이 떴다.
-
-
+첫 코드에서 시행착오를 겪은 게 여러번 코드를 수정해나갔지만 계속 예외 케이스들을 만나게 됐다.
+left child를 탐색해나갈 때 0과의 max처리를 해주면 [-1,2]에서 에러가 나고 안 해주면 기본 제공된 케이스에서 또 에러가 났다.
+대충 방향은 잡은 상태로 다시 풀이를 참고했다.
 
 #### 💡 What I learned!
-그래서 고민하다가 그냥 풀이를 참고했다.
 ```
-def wordBreak(self, s, wordDict):
-        dp = [False] * len(s)
-        for i in range(len(s)):
-            for w in wordDict:
-                if w == s[i:i+len(w)] and (dp[i-1] or i == 0):
-                    dp[i+(len(w)-1)] = True
-        return dp[-1]
-```
-string의 길이만큼 array를 만들어주고 word로 짤려나간 마지막 index로부터 또 다시 word로 짤려나갈 수 있는지를 체크해주는 방식이었다. 이렇게 해당 char자리에 dp를 true로 설정해서 점점 오른쪽으로 탐색해나가는 방식이었다. 이런식으로 맨 마지막 char 자리도 true면 그 전 string까지 wordDict를 통해서 쪼갤 수 있는지 여부를 돌려준다.
-
-확실히 memory면에 있어서 내 방식은 경우의 수에 따라 dp에 저장된 string의 숫자나 string의 길이도 변동이 심해서 상수로 거의 비슷한 공간을 차지하는 예시답안이 효율적일 것 같았다.
-비슷한 로직인 것 같은데 time에서도 이렇게 많이 차이날 수 있다는 걸 깨달을 수 있는 문제였다.
-
-...라고 생각했는데 submit해보니까 <b>틀린 답안</b>이라고 나온다! 백준 같은 경우는 플랫폼은 답안에서 배울 점이 많았는데 leetcode는 보면 vote를 많이 받은 submission이더라도 <i>엉터리인 경우도 많아서 조심해야한다.</i>
-
-```
-# Runtime Beats 94.62%
-from collections import deque
 class Solution:
-    def wordBreak(self, s, wordDict):
-        q = deque([s])
-        seen = set() 
-        while q:
-            s = q.popleft()    # popleft() = BFS ; pop() = DFS
-            for word in wordDict:
-                if s.startswith(word):
-                    new_s = s[len(word):]
-                    if new_s == "": 
-                        return True
-                    if new_s not in seen:
-                        q.append(new_s)
-                        seen.add(new_s)
-        return False
+    def dfs(self, node):
+        if not node: 
+            return 0
+        
+        left_sum=self.dfs(node.left)
+        if left_sum<0: left_sum=0
+        right_sum=self.dfs(node.right)
+        if right_sum<0: right_sum=0
+
+        # max value of the path
+        self.max_path = max(self.max_path, left_sum + right_sum + node.val)
+        
+        # add only one of the paths
+        return max(left_sum, right_sum) + node.val
+    def maxPathSum(self, root):
+        self.max_path = float('-inf')
+        self.dfs(root)
+        return self.
 ```
-dp로 된 좋은 time complexity는 찾지 못했고 tree에서 좋은 예시답안을 찾았다.
-또 string match에 있어서 일일히 index를 찾고, 제일 첫 occurence만 지정해줬는데 여기서 startswith이라는 좋은 기능을 사용하면 좋을 것 같다.
+문제를 풀면서 놓치고 있던 게 반드시 left나 right 중 하나를 선택해줘야한다는 것이다. 그래서 node가 있으면 먼저 left의 sum과 right의 sum을 구해준 다음에 자신에 해당하는 node value와 child에 해당하는 left와 right의 value들을 더해줘서 max sum을 구해준다. 처음 max sum 설정은 음수 input이 들어올 것까지 생각해 음의 infinity로 설정해준다.
