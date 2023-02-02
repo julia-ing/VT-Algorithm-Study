@@ -3,7 +3,7 @@ class Solution(object):
   def numIslands(self, grid):
     output = 0
 
-    # Find DFS (adacent 1s - change to 0)
+    # Find DFS (adjacent 1's - change to 0)
     dir = [(1, 0), (0, 1), (-1, 0), (0, -1)]
 
     def dfs(i, j):
@@ -21,7 +21,6 @@ class Solution(object):
     for i in range(n):
       for j in range(m):
         if grid[i][j] == "1":
-          print('--', i, j)
           output += 1
           dfs(i, j)
 
