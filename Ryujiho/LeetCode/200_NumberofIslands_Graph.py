@@ -26,5 +26,3 @@ class Solution(object):
 
     return output
 
-
-## We can add visited flag to not check visited place -> To decrease runtime speed
