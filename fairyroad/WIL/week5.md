@@ -33,4 +33,9 @@
         return cnt
         
 ![image](https://user-images.githubusercontent.com/74306759/216358927-4213bb07-a8bb-4fbd-9ee8-54873043dcb8.png)
-  
+
+
+✔number 2
+
+        global: 일반함수 내에서 전역 변수를 사용할 때 사용하니까 nested function이 아니라 함수밖에 변수를 참조한다는 의미
+        nonlocal : nested에서는 상위함수의 변수를 사용가능!
