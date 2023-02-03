@@ -39,3 +39,25 @@
 
         global: 일반함수 내에서 전역 변수를 사용할 때 사용하니까 nested function이 아니라 함수밖에 변수를 참조한다는 의미
         nonlocal : nested에서는 상위함수의 변수를 사용가능!
+        
+        class TreeNode:
+            def __init__(self, val=0, left=None, right=None):
+                self.val = val
+                self.left = left
+                self.right = right
+
+
+        class Solution:
+            def maxPathSum(self, root):
+                def search(root):
+                    nonlocal res
+                    if not root:
+                        return 0
+                    leftSum = search(root.left)
+                    rightSum = search(root.right)
+                    res = max(res, leftSum + rightSum + root.val)
+                    return max(0, max(leftSum, rightSum) + root.val)
+
+                res = float('-inf')
+                search(root)
+                return res
