@@ -51,3 +51,20 @@
         # O(N log k) time
         return heapq.nlargest(k, count.keys(), key=count.get) 
         
+✔number2
+
+    [처음 생각한 방법]
+    for문 2개를 이용해서 x, y 를 이동시키면서 palindromic string을 찾아주는 방법 -> test case는 통과했지만 time exceeded가 발생함
+    
+    [참고한 방법]
+    class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        m = ''  # Memory to remember a palindrome
+        for i in range(len(s)):  # i = start, O = n
+            for j in range(len(s), i, -1):  # j = end, O = n^2
+                if len(m) >= j-i:  # To reduce time
+                    break
+                elif s[i:j] == s[i:j][::-1]:
+                    m = s[i:j]
+                    break
+        return m
