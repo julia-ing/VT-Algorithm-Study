@@ -1,0 +1,24 @@
+class Solution:
+    def topKFrequent(self, nums: List[int], k: int) -> List[int]:
+        nums.sort()
+        set_nums = list(set(nums))
+        dict_nums = {}
+        pivot = str(nums[0])
+
+        cnt = 0
+
+        for i in nums:
+            if str(i) == pivot:
+                cnt = cnt + 1
+            else:
+                dict_nums[pivot] = cnt
+                cnt = 1
+                pivot = str(i)
+
+            dict_nums[pivot] = cnt
+            sorted_dict = sorted(dict_nums.items(), key = lambda item: item[1], reverse = True)
+
+        result = []
+        for i in range(k):
+            result.append(int(sorted_dict[i][0]))
+        return result
