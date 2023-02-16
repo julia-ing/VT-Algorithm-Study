@@ -49,3 +49,11 @@ def create_tree(inp):
             prevIndex = 0
     
     return rootNode
+
+"""
+For future reference
+tree_str = "5,3,6,2,4,null,null,1" # input list of node values without brackets
+node_list = list(tree_str.split(",")) # split nodes
+node_list = [int(a) if a.isdigit() else None for a in node_list] # map string to digits
+tree = create_tree(node_list) # create tree with util
+"""
