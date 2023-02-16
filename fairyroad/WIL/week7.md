@@ -1,3 +1,14 @@
+✔number2
+
+     recursive하게 구현하려고 함 (left, self, right) -> inorder
+     cnt를 어떻게 올릴지 고민하다가 복잡할 것 같아서 그냥 list에 append하는 방식을 생각함
+     근데 어떻게 구현해야할 지 감이 안와서 그냥 정답을 봤음
+     완전 신박함.. 어차피 BST이므로 크기는 left, self, right순으로 크게 되니까 왼쪽부터 k-1 index에 있는 값이 내가 찾는 k번째의 값이 됨!
+     class Solution:
+        def inorders(r):
+            return inorders(r.left) + [r.val] + inorders(r.right) if r else []
+        def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+            return inorders(root)[k-1]
 
 ✔number2
 
