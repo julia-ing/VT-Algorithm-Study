@@ -23,13 +23,17 @@ class Solution:
 # iterative
 class Solution:
     def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
-        stack = []
-        while root or stack:
-            while root:
-                stack.append(root)
-                root = root.left
-            root = stack.pop()
-            k -= 1
-            if k == 0:
-                return root.val
-            root = root.right
+        n=0
+        stack=[]
+        cur=root
+        
+        while cur or stack : # 노드가 더이상 없고 stack이 empty할 때까지
+            while cur : # 노드 전부 순회
+                stack.append(cur)
+                cur=cur.left # 왼쪽으로 내려가며 stack에 append
+            cur=stack.pop()
+            n +=1
+            
+            if n==k : k번째 pop
+                return cur.val
+            cur = cur.right
