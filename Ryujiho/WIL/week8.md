@@ -1,4 +1,4 @@
-# 128	Longest Consecutive Sequence	Graph	Medium
+# [128](https://leetcode.com/problems/find-median-from-data-stream/)	Longest Consecutive Sequence	Graph	Medium
 ### Solution 1 
 - 리스트 정렬을 사용하지 않아도 가장 최소인 값을 시작으로, 연속적인 값이 배열에 있는지 체크하여 가장 긴 연속된 길이를 구할 수 있다. 
 
@@ -23,7 +23,7 @@ class Solution(object):
         return maxLen
 ```
 
-# 295	Find Median from Data Stream	Heap	Hard
+# [295](https://leetcode.com/problems/find-median-from-data-stream/)	Find Median from Data Stream	Heap	Hard
 ### Solution 1. heap (runtime: )
 **Two Condition**
 - the median of an odd-sized list is a largest number of the first half of its elements.
@@ -37,7 +37,25 @@ class Solution(object):
 1. Use 2 heap: min-heap / max-heap
 2. When we add number, consider median value and balance two heap
 3. Since each heap has lower half and larger half, finding median is simple
- 
+``` 
+ from heapq import *
+ class MedianFinder:
+     def __init__(self):
+         self.small = []  # negative numbers for small
+         self.large = []  # positive numbers for large
+
+     def addNum(self, num):
+         if len(self.small) == len(self.large):
+             heappush(self.large, -heappushpop(self.small, -num))
+         else:
+             heappush(self.small, -heappushpop(self.large, num))
+
+     def findMedian(self):
+         if len(self.small) == len(self.large):
+             return float(self.large[0] - self.small[0]) / 2.0
+         else:
+             return float(self.large[0])
+ ```
  **Reference**
   - https://leetcode.com/problems/find-median-from-data-stream/solutions/1497698/python-two-heap-easy-to-understand/ 
   - https://leetcode.com/problems/find-median-from-data-stream/solutions/2492199/python-3-min-heap-and-max-heap-approach-explained/?languageTags=python3&topicTags=heap-priority-queue
