@@ -47,7 +47,7 @@
 ## Solution
 ### Sorting
 - Time Complexity : O(nlgn)
-  - The main for loop does constant work nnn times,
+  - The main for loop does constant work n times,
   - so the algorithm's time complexity is dominated by the invocation of sort,
   - which will run in O(nlgn) time for any sensible implementation.
 - Space Complexity : O(1) or O(n)
