@@ -78,6 +78,7 @@ class Solution:
 
 ### HashSet and Intelligent Sequence Building
 - 이런 솔루션도 있구나~하고 새로 알게된 솔루션
+- 사실 
 - Time Complexity : O(n)
   - Although the time complexity appears to be quadratic due to the while loop nested within the for loop, closer inspection reveals it to be linear.
   - Because the while loop is reached only when currentNum marks the beginning of a sequence (i.e. currentNum-1 is not present in nums), the while loop can only run for n iterations throughout the entire runtime of the algorithm.
@@ -121,6 +122,10 @@ class Solution:
 - Follow up의 optimization은 어떻게 구현할 수 있을까?
 
 ## Solution
+- sorted()를 사용하면 타임에러가 나고, sort()를 사용하면 통과된다.
+- 이유가 궁금해서 chatGPT에 검색해보았다.
+- ![image](https://user-images.githubusercontent.com/97150219/221090722-fd694811-fd82-40bb-ace3-418d0b084938.png)
+- 이것만 있으면 구글링이 필요없다.. 혁신이다
 
 ```python
 class MedianFinder:
