@@ -25,8 +25,3 @@ class Solution:
         return max(path_sums)
 
 
-'''
-brute force 접근법을 사용했다.
-모든 path의 sum을 저장하지 않고도 최적의 sum을 구할 수 있는 방법이 있을 것 같다. 
-개선한다면 리스트를 쓰지 않아도 되어 공간 복잡도를 줄일 수 있을 것이다. 
-'''
