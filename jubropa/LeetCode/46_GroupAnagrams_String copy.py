@@ -8,4 +8,6 @@ class Solution:
             key = str(sorted(word))
             table[key].append(word)
 
-        return list(table.values())     
+        result = list(table.values())
+
+        return result
