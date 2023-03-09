@@ -151,24 +151,63 @@ class Solution:
                 return [left, right]
 ```
 - Time Complexity : O(n)
-- 
+- 하지만 이 방법은 잘못됐음 -> two pointer 방식을 사용하려면 정렬해줘야하는데, 기존 인덱스를 반환해야 하는 이 문제에서는 적용할 수 없음 
 
 ## 8. 연결 리스트
 ### 234) Palindrome Linked List
+- Easy
 
+#### 의식의 흐름
+- 먼저 linked list -> list 해준 다음 확인해주기?
 
-## Solution
-### Solution name
-
-
+#### Solution
 ```python
-# solution
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+        l = []
+
+        while head != None:
+            l.append(head.val)
+            tmp = head
+            head = head.next
+
+        for idx in range(len(l)//2):
+            if l[idx] != l[len(l) - 1 - idx]: return False
+        
+        return True
 ```
+- linked list -> list 변환시 tmp변수는 필요없을 듯하다.
+- 비교해줄 때 위 125) Valid Palindrome의 Deque 방식을 사용하면 속도를 개선할 수 있다.
 
-
-
-
-
-
-# 느낀점
-- 내용
+#### Solution - Runner
+- Runner
+  - 연결리스트를 순회할 때 2개의 포인터를 동시에 사용한느 기법
+  - 한 포인터가 다른 포인터보다 앞서게 하여 병합 지점이나 중간 위치, 길이 등을 판별할 때 유용하게 사용할 수 있음
+  - 2개의 포인터는 각각 Fast Runner, Slow Runner라고 부르는데, 보통 Fast Runner(Pointer)는 두 칸씩 건너뛰고 Slow Runner(Pointer)는 한 칸씩 이동하게 함
+  - 이 때 Fast Runner가 연결리스트의 끝에 도달하면, Slow Runner는 정확히 연결리스트의 중간 지점을 가리키게 됨
+  - 이 같은 방식으로 중간 위치를 찾아내면, 여기서부터 값을 비교하거나 뒤집기를 시도하는 등 여러모로 활용 가능
+  - 연결리스트에서 반드시 쓰이는 기법
+- 투포인터 방식.. 아직 헷갈린다
+```python
+class Solution:
+    def isPalindrome(self, head: Optional[ListNode]) -> bool:
+      rev = None
+      slow = fast = head
+      
+      # runner를 이용해 역순 연결 리스트 구성
+      while fast and fast.next:
+        fast = fast.next.next # 두 칸 이동
+        rev, rev.next, slow = slow, rev, slow.next
+      if fast: # 원소 개수가 홀수개일 때
+        slow = slow.next
+        
+      # palindrome 여부 확인
+      while rev and rev.val == slow.val:
+        slow, rev = slow.next, rev.next
+      return not rev
+```
