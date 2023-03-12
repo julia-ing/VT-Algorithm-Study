@@ -2,7 +2,7 @@
 **Algorithm**
 - String, Two Pointer (Left / Right)
 
-**Solution**
+**Two Pointer Solution (runtime: 1038 ms)**
 - Update the right pointer every iteration
 - Update the left pointer when the right value is more lower than the left
 ```
@@ -54,21 +54,15 @@ left = 1
 right = 3 -> 4
 max_profit =[3]-[1]=2 X
 
-step 4.
-
-
+...
 ```
 
 **Reference**
 https://leetcode.com/problems/best-time-to-buy-and-sell-stock/solutions/1735550/python-javascript-easy-solution-with-very-clear-explanation/
 
-**First Try**
--  배열을 순서대로 순회하면서 최대값과 최솟값을 저장하고, 왼쪽에서부터 최솟값이 있을 경우 현재값과의 차이값을 구함 -> TLE -> 해법 생각이 안나서 정답 풀이 참고함
-
+**First Try (runtime: 929 ms)**
+-  배열을 순서대로 순회하면서 최대값과 최솟값을 저장하고, 왼쪽에서부터 최솟값이 있을 경우 현재값과의 차이값을 구함 -> TLE
 ```
-
-class Solution:
-    def maxProfit(self, prices: List[int]) -> int:
         min_price  = 10001
         max_profit = -1
         for price in prices:
@@ -79,4 +73,19 @@ class Solution:
                     maxProfit = max(max_profit, price-min_price)
 
         return max(0, max_profit)
+```
+- 참고한 정답풀이
+- `min_price`에 현재까지 살펴본 리스트의 최소값을 저장하고 , 그 다음 인덱스에서 최소값과 현재값의 차이인 `profit`을 계산하여 `max_profit`을 업데이트한다.
+- 순서대로 보면서, 현재까지의 최소값과 그 다음 인덱스들을 순회하며 계산하기 때문에 잘 수행됨!
+- `Two pointer`알고리즘 해법보다 빠름
+```
+        min_price = float('inf')
+        max_profit = 0
+        for price in prices:
+            if price < min_price:
+                min_price = price
+            elif price - min_price > max_profit:
+                max_profit = price - min_price
+        return max_profit
+
 ```
