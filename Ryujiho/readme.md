@@ -15,7 +15,7 @@ Array
 
 Binary
 
-- [ ] [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/)
+- [x] [Sum of Two Integers](https://leetcode.com/problems/sum-of-two-integers/)
 - [ ] [Number of 1 Bits](https://leetcode.com/problems/number-of-1-bits/)
 - [ ] [Counting Bits](https://leetcode.com/problems/counting-bits/)
 - [ ] [Missing Number](https://leetcode.com/problems/missing-number/)
@@ -25,7 +25,7 @@ Binary
 
 Dynamic Programming
 
-- [ ] [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
+- [x] [Climbing Stairs](https://leetcode.com/problems/climbing-stairs/)
 - [ ] [Coin Change](https://leetcode.com/problems/coin-change/)
 - [ ] [Longest Increasing Subsequence](https://leetcode.com/problems/longest-increasing-subsequence/)
 - [ ] [Longest Common Subsequence](
@@ -41,7 +41,7 @@ Dynamic Programming
 
 Graph
 
-- [ ] [Clone Graph](https://leetcode.com/problems/clone-graph/)
+- [x] [Clone Graph](https://leetcode.com/problems/clone-graph/)
 - [ ] [Course Schedule](https://leetcode.com/problems/course-schedule/)
 - [ ] [Pacific Atlantic Water Flow](https://leetcode.com/problems/pacific-atlantic-water-flow/)
 - [ ] [Number of Islands](https://leetcode.com/problems/number-of-islands/)
