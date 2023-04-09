@@ -144,17 +144,7 @@ class Solution(object):
   - collections 모듈에서 deque라는 이름으로 지원
     - collections.deque는 이중 연결 리스트로 구현되어 있음.
 
-### 641) Design Circular Deque
-- Medium
-
-#### Solution
-
-```python
-
-```
-
 #### What I learned
 
 # 느낀점
 - 그동안 여러가지 핑계로 너무 쉬어버렸다..! 나약한 자신
-- 
